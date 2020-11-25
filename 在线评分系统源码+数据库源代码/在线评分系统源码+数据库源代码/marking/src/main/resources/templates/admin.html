@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+		<meta charset="utf-8">
+		<title>管理员界面</title>
+	 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  <style type="text/css">
+		  button{
+			border-style: none; 
+		  }
+		  img{
+		  			 width: 20px;
+		  			 height: 20px;
+		  }
+		  
+	  </style>
+	</head>
+	<body>
+	<div class="row " sec:authorize="isAnonymous()" style="text-align: center;">
+				<div class="col-md-12" style="background-color: lightblue" >
+					<table class="table">
+						<tr>
+						
+							<td ><a style="color:OrangeRed" 
+							th:href="@{/userLogin}">登录</a>	
+							</td>
+							<td><a th:href="@{/userLogin}"> 注册</a></td>
+						</tr>
+					</table>
+				</div>
+				</div>
+	<div class="container" sec:authorize="isAuthenticated()">
+	  <h3>管理员界面</h3>
+	     
+	  
+	    <div class="row" >
+	       <div class="col-md-12 "  >
+			    
+			<div name="time" th:text="${time}" style="width: 410px"></div>
+
+	       </div>
+	       </div>
+	  <div class="row" style=" text-align: right;">
+	       <div class="col-md-12 "  >
+			    <a 	 th:href="@{/select}">查看产品</a>  
+			    <button th:text="添加产品"  type="button"  data-toggle="modal" data-target="#myModal" style=" color: #007bff;">
+			      添加产品  
+			     </button>
+	       </div>
+	       </div>
+		   
+		   
+	  <div class="row" style="text-align: center;">
+	  <div class="col-md-2" style="background-color:lavender;">
+	  	<table class="table">
+	    <thead>
+	      <tr>
+	        <th>管理员用户</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	    
+	      <tr>
+	       <td><p>管理员头像</p>
+	        <img style="width: 73px;height: 73px; border-radius: 50%;" src="/images/02.png"
+		      ></td>
+	      </tr>
+	      <tr>
+	       <td>
+	   <p>管理员</p>
+	     <a sec:authentication="name" ></a></td> 
+	      </tr>
+	      <tr><td><a th:href="@{/index}" th:text="返回主页">返回主页</a></td></tr>
+	    </tbody>
+	  </table>
+	  </div>
+	 <div class="col-md-10" style="background-color:lavenderblush;"><table class="table">
+    <thead>
+      <tr>
+		  <th>用户名</th>
+		<th>产品名称</th>
+        <th>得分情况</th>
+		<th>操作</th>
+       
+      </tr>
+    </thead>
+      <tr id="updatetr" th:each="s:${score}">
+      	<td id="updateid" style="display:none" th:text="${s.id}"></td>
+		<td  th:text="${s.userName}">1</td>
+        <td th:text="${s.productName}">1</td>
+        <td th:text="${s.score}">3</td>
+        <td><a  href="javascript:void(0)"  th:onclick="delete1([[${s.id}]])">删除</a>	</td>
+      </tr><!-- @{'delete1('+${s.id}+')'}" -->
+  </table></div>
+  
+  
+	  </div>
+	   <div class="row"  >
+     
+	    <div class="col-md-12 " style=" height: 50px; text-align:center; background-color: gray;" >
+	 <p  > 1/1&nbsp;页&nbsp;共一页</p>
+	    </div>
+	    </div>
+		
+		
+	</div>
+
+	<div class="modal fade" id="myModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	   
+	        <!-- 添加模态框头部 -->
+	        <div class="modal-header">
+	          <h4 class="modal-title">添加评分产品</h4>
+	        </div>
+	   
+	        <!-- 模态框主体 -->
+	        <div class="modal-body">
+	  <form class="form-signin" role="form" method="get" th:action="@{/add}">
+	        	<table class="table">
+	        	   
+	            <tr>
+	               <td><input type="text" name="productName" placeholder="产品名称" ></td>
+	               <td><input type="text" name="productIntroduce" placeholder="产品介绍"></td>
+	            </tr>
+	            <tr>
+				   <td><input type="date" name="start" ></td>
+				   <td><input type="date" name="end"></td>
+				</tr> 
+	        </table>
+	         <button type="submit">添加</button>
+	     </form>
+	        </div>
+	   </div>
+	      </div>
+	    </div>
+	</body>
+	
+	<script th:src="@{/js/jquery-1.8.3.min.js}"></script>
+	 <script th:inline="javascript">
+function delete1(id){
+	if (confirm("宁确定要删？？")){
+		$(function(){
+	     $.ajax({
+	    	url:"/delete/"+id,
+	    	success:function(result){
+	    		if(result===1){
+	    			alert("删除成功");
+	    			location.reload();
+	    		}
+				}
+			})
+		})
+	}
+	}
+
+	</script>
+</html>

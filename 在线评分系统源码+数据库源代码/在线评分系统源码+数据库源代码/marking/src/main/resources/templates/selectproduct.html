@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>个人信息</title>
+	 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  
+	</head>
+	<body>
+	
+	<div class="container">
+	  <h3>产品表</h3>
+	   <div class="row">	 
+	   <div class="col-md-12" style="text-align: right;">
+      <a th:href="@{/admin}">返回</a>
+</div>
+</div>
+	  <div class="row">
+	 <div class="col-md-12" style="background-color:lavenderblush;">
+	 <table class="table" >
+    <thead>
+      <tr>
+		<th>编号</th>
+        <th>产品名称</th>
+		<th>操作</th>
+		
+		
+      </tr>
+    </thead>
+    <tbody>
+     <tr th:each="product:${productAll}">
+      <td th:text="${product.id}" >1</td>
+      <td th:text="${product.productName}">1</td>
+							<td><a type="button" data-toggle="modal"
+								th:data-target="'#myModal'+${product.id}" style="color: #007bff;"
+								id="updateproduct"> 修改 </a> 
+							<a href="javascript:void(0)" th:onclick="del([[${product.id}]]);">删除</a></td>
+						</tr>
+    </tbody>
+  </table></div>
+	  </div>
+	 
+	  
+	   <div class="row" style="text-align: center;">
+     
+	    <div class="col-md-12 " style=" height: 50px; background-color: gray;" >
+	  1/1&nbsp;页&nbsp;共一页
+	    </div>
+	    </div>
+	</div>
+	
+	<div th:each="product:${productAll}">
+	<div class="modal fade" th:id="'myModal'+${product.id}">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	   
+	        <!-- 添加模态框头部 -->
+	        <div class="modal-header">
+	          <h4 class="modal-title"><span th:text="'修改'+${product.productName}+'的名称'"></span></h4>
+	        </div>
+	   
+	        <!-- 模态框主体 -->
+	        <div class="modal-body">
+	  <form class="form-signin" role="form" method="get" th:action="@{/update}">
+				 <input type="text" name="id" readonly="readonly" th:value="${product.id}" >
+	               <input type="text" name="name" th:value="${product.productName}" >
+
+	         <button type="submit" >修改</button>
+	     </form>
+	   
+	        </div>
+	   </div>
+	       
+	      </div>
+	    </div></div>
+	</body>
+	<script th:src="@{/js/jquery-1.11.1.js}"></script>
+	 <script type="text/javascript">
+function del(id){
+	if (confirm("宁确定要删？？")){
+		$(function(){
+		     $.ajax({
+		    	url:"/del/"+id,
+		    	success:function(result){
+		    		if(result===1){
+		    			alert("删除成功");
+		    			location.reload();
+		    		}
+					}
+				})
+			})
+		}
+		}
+	
+	</script>
+</html>

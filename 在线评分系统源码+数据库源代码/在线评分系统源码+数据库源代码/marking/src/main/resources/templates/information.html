@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+		<meta charset="utf-8">
+		<title>个人信息</title>
+	 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+	  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+	  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+	  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	  <style type="text/css">
+		  img{
+		  			 width: 20px;
+		  			 height: 20px;
+		  }
+		  
+	  </style>
+	</head>
+	<body>
+	
+	<div class="container">
+	  <h3>个人信息表</h3>
+
+	  <div class="row" >
+	  
+	 <div class="col-md-12" style="background-color:lavenderblush;"><table class="table">
+    <thead>
+      <tr>
+		<th>编号</th>
+        <th>用户名</th>
+		<th>密码</th>
+        <th>头像</th>
+        <th>邮箱</th>
+		<th>用户类型</th>
+		<th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:object="${UserInfo}">
+     <td  th:text="*{id}">1</td>
+      <td th:text="*{userName}">1</td>
+      <td th:text="*{password}">1</td>
+      <td th:text="*{touImage}">1</td>
+      <td th:text="*{email}">1</td>
+      <td th:text="*{vaild}">1</td>
+      <td><a th:href="@{/index}">返回</a></td>
+      </tr> 
+    
+    </tbody>
+  </table></div>
+	  </div>
+	 
+	     <!--  // 判断是否为管理员，跳转不同页面 -->
+	
+	     
+	  
+	   <div class="row" style="text-align: center;">
+     
+	    <div class="col-md-12 " style=" height: 50px; background-color: gray;" >
+	  1/1&nbsp;页&nbsp;共一页
+	    </div>
+	    </div>
+		
+		
+	</div>
+	</body>
+</html>
