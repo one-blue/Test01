@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd"><!--dtd文档，约束xml文件，下面报错就是它查询出来的-->
+<configuration><!--typeAliases里alias定义的StudentMapper.xml里的parameterType的值-->
+    <typeAliases>
+        <typeAlias type="com.it.bean.StudetBean" alias="student"></typeAlias>
+        <typeAlias type="com.it.bean.WorkBean" alias="work"></typeAlias>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/it/mapper/StudentMapper.xml"></mapper>
+        <mapper resource="com/it/mapper/WorkMapper.xml"/>
+    </mappers>
+</configuration>
